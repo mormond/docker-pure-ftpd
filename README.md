@@ -26,7 +26,7 @@ docker pull stilliard/pure-ftpd:hardened
 **If you want to make changes, my advice is to either change the run command when running it or extend this image to make any changes rather than forking the project.**  
 This is because rebuilding the entire docker image via a fork can be *very* slow as it rebuilds the entire pure-ftpd package from source. 
 
-To change the command run on start you could use the `command:` option if using docker-composer, or with [`docker run`](https://docs.docker.com/engine/reference/run/) directly you could use:
+To change the command run on start you could use the `command:` option if using `docker-compose`, or with [`docker run`](https://docs.docker.com/engine/reference/run/) directly you could use:
 
 ```
 docker run --rm -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 stilliard/pure-ftpd:hardened bash /run.sh -c 30 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P localhost -p 30000:30059
@@ -162,6 +162,8 @@ Tags available for different versions
 Usage of specific tags: 
 `sudo docker pull stilliard/pure-ftpd:hardened-1.0.36`
 
+**An arm64 build is also available here:** https://hub.docker.com/r/zhabba/pure-ftpd-arm64 *- Thanks @zhabba*
+
 ----------------------------------------
 
 Our default pure-ftpd options explained
@@ -194,7 +196,7 @@ There are a few spots onto which you can mount a docker volume to configure the
 server and persist uploaded data. It's recommended to use them in production. 
 
   - `/home/ftpusers/` The ftp's data volume (by convention). 
-  - `/etc/pure-ftpd/passwd` A directory containing the single `pureftps.passwd`
+  - `/etc/pure-ftpd/passwd` A directory containing the single `pureftpd.passwd`
     file which contains the user database (i.e., all virtual users, their
     passwords and their home directories). This is read on startup of the
     container and updated by the `pure-pw useradd -f /etc/pure-
